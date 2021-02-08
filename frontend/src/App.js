@@ -15,7 +15,7 @@ import PrivateRoute from './auth/PrivateRoute'
 import doctorDashboard from './Dashboards/doctorDashboard'
 import OrgDashboard from './Dashboards/orgDashboard'
 import PatientDashboard from './Dashboards/patientDashboard'
-
+console.log("Started working with the downloads"
 function App() {
   return (
     <Switch>
