@@ -153,13 +153,14 @@ function RegisterOrganisation(props) {
             Submit
           </button>
         </div>
-        <Link to='/'>
-          {' '}
-          <button>Home</button>{' '}
-        </Link>
-
         {error ? <p>{error}</p> : ''}
         {message ? <p>{message}</p> : ''}
+        <Link to='/users/login'>
+          {' '}
+          <div className='inputfield'>
+            <p>Already Registered? Login</p>
+          </div>{' '}
+        </Link>
       </div>
     </div>
   )

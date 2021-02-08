@@ -161,9 +161,11 @@ const RegisterDoctor = (props) => {
 
         {error ? <p>{error}</p> : ''}
         {message ? <p>{message}</p> : ''}
-        <Link to='/'>
+        <Link to='/users/login'>
           {' '}
-          <button>Home</button>{' '}
+          <div className='inputfield'>
+            <p>Already Registered? Login</p>
+          </div>{' '}
         </Link>
       </div>
     </div>

@@ -15,11 +15,13 @@ import PrivateRoute from './auth/PrivateRoute'
 import doctorDashboard from './Dashboards/doctorDashboard'
 import OrgDashboard from './Dashboards/orgDashboard'
 import PatientDashboard from './Dashboards/patientDashboard'
+import RegisterSelect from './Register/RegisterSelect'
 
 function App() {
   return (
     <Switch>
       <Route exact path='/' component={Home} />
+      <Route exact path='/register' component={RegisterSelect} />
       <Route exact path='/users/register/patient' component={RegisterUser} />
       <Route exact path='/users/register/doctor' component={RegisterDoctor} />
       <Route

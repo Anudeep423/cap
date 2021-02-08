@@ -123,9 +123,8 @@ const RegisterUser = (props) => {
         </div>
         {error ? <p>{error}</p> : ''}
         {message ? <p>{message}</p> : ''}
-        <Link to='/'>
-          {' '}
-          <button>Home</button>{' '}
+        <Link to='/users/login' className='inputfield'>
+          <p>Already Registered? Login</p>
         </Link>
       </div>
     </div>
