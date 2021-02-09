@@ -1,7 +1,14 @@
+require("dotenv").config();
 const express = require('express');
 const router = express.Router();
 const patDtsCont = require('../controllers/patDetsCont');
-
+const upload = require('../controllers/repUploadCont');
+const uplReport = require('../models/patReport');
+//const doct = require('../controllers/docCont');
+const path = require('path');
+const AWS = require("aws-sdk");
+//const webview = require('webview');
+var fs = require('fs');
 
 // routes for patient details
 
@@ -60,14 +67,6 @@ router.get('/doctors/reports/download/:dlKey', function(req, res, next){
     uplReport.findOne({'report.key': dlkey})
     .then(() => 
     {
-    /*    
-    res.attachment(dlkey)
-    var fileStream = s3.getObject(options).createReadStream();
-    console.log(fileStream);
-    const response = JSON.stringify(JSON.parse(fileStream.pipe(res)));
-    res.json({message: 'success', result: data, report: response})
-    */
-   
    const readStream = s3.getObject(params).createReadStream();
    const writeStream = fs.createWriteStream(path.join(__dirname, '../report_download/'+ dlkey));
    readStream.pipe(writeStream);
