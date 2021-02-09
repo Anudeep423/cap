@@ -1,7 +1,7 @@
-import React from 'react';
-import './HeroSection.css';
-import { Button } from './Button';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import './HeroSection.css'
+import { Button } from './Button'
+import { Link } from 'react-router-dom'
 
 function HeroSection({
   lightBg,
@@ -13,21 +13,21 @@ function HeroSection({
   buttonLabel,
   img,
   alt,
-  imgStart
+  imgStart,
 }) {
   return (
     <>
       <div
-        className={lightBg ? 'home__hero-section' : 'home__hero-section darkBg'}
-      >
+        className={
+          lightBg ? 'home__hero-section' : 'home__hero-section darkBg'
+        }>
         <div className='container'>
           <div
             className='row home__hero-row'
             style={{
               display: 'flex',
-              flexDirection: imgStart === 'start' ? 'row-reverse' : 'row'
-            }}
-          >
+              flexDirection: imgStart === 'start' ? 'row-reverse' : 'row',
+            }}>
             <div className='col'>
               <div className='home__hero-text-wrapper'>
                 <div className='top-line'>{topLine}</div>
@@ -39,11 +39,10 @@ function HeroSection({
                     lightTextDesc
                       ? 'home__hero-subtitle'
                       : 'home__hero-subtitle dark'
-                  }
-                >
+                  }>
                   {description}
                 </p>
-                <Link to='/sign-up'>
+                <Link to='/register'>
                   <Button buttonSize='btn--wide' buttonColor='blue'>
                     {buttonLabel}
                   </Button>
@@ -59,7 +58,7 @@ function HeroSection({
         </div>
       </div>
     </>
-  );
+  )
 }
 
-export default HeroSection;
+export default HeroSection
