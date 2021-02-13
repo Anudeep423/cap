@@ -4,8 +4,11 @@ const { ObjectId } = mongoose.Schema.Types;
 //const patSchema = require('./patientModel').patientSchema;
 
 const patRepUpl = new Schema ({
-    
-    //patient: patSchema,
+
+    patDetails: {
+        type: ObjectId,
+        ref: 'patients'
+    },
 
     report: {
         type: Object,

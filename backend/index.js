@@ -8,6 +8,8 @@ const cors = require('cors');
 const createError = require('http-errors');
 const usersRouter = require('./routes/users');
 const catalogRouter = require('./routes/catalog');
+const path = require('path');
+const multer = require('multer');
 
 
 app.use(cors());
@@ -50,15 +52,20 @@ function validateUser(req, res, next) {
       }else{
         // add user id to request
         req.body.id = decoded.id;
+        res.locals.id = decoded.id;
         next();
       }
     });
     
   }
 
+//app.use(multer().any());
+
 app.use('/users', usersRouter);
 
-app.use('/catalog', catalogRouter);
+app.use('/catalog', validateUser, catalogRouter);
+
+app.use('/report/view', express.static(path.join(__dirname, './report_download')));
 
 
 // catch 404 and forward to error handler
@@ -67,6 +74,7 @@ app.use(function(req, res, next) {
 });
 
 // error handler
+
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
@@ -80,3 +88,4 @@ app.use(function(err, req, res, next) {
   });
   
 });
+

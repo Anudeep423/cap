@@ -31,7 +31,9 @@ const pdf = require('html-pdf');
     }
 };
 
-const upload = multer({
+const upload = 
+multer({     
+              
     fileFilter,
     //limits: {fileSize: 1024 * 1024 * 5},
     storage: multerS3({
@@ -40,7 +42,6 @@ const upload = multer({
       //limits: { fieldSize: 8 * 1024 * 1024 },
       bucket: BUCKET_NAME,
       metadata: function (req, file, cb) {
-  
         cb(null, {fieldName: file.fieldname});
       },
       key: function (req, file, cb) {
@@ -49,5 +50,17 @@ const upload = multer({
       }
     })
   });
+
+/*
+  const data = function (req, res, next) {
+    if(req.path === '/doctors/uploadReport')
+    {
+      multer.single('report')
+      console.log('multer middleware');
+    }
+    next();
+  }
+*/
+
 
   module.exports = upload;
