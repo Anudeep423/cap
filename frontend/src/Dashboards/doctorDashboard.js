@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { signout, getAllPatientDetails } from '../CallingApi/patientapi'
+import { Link, Redirect } from 'react-router-dom'
+import { signout, getAllPatientDetails, uploadPatientReport } from '../CallingApi/patientapi'
 import { FaBars, FaTimes } from 'react-icons/fa'
 import { IconContext } from 'react-icons/lib'
 import { Button } from '../Landing Page/Button'
@@ -13,6 +13,7 @@ function DoctorDashboard({ history }) {
   const [values, setValues] = useState('')
   const [p_dets, setP_dets] = useState([])
   const [displayDetails, setDisplayDetails] = useState(false)
+  const [file,setFile] = useState()
 
   useEffect(() => {
     const doc = JSON.parse(localStorage.getItem('jwt'))
@@ -27,6 +28,7 @@ function DoctorDashboard({ history }) {
   }, [])
 
   const onSubmit = () => {
+    
     const patDets = PatientBasicDetails
     console.log(patDets.data)
     const pat_Index = patDets.data.filter((data, i) => {
@@ -40,7 +42,7 @@ function DoctorDashboard({ history }) {
     if (pat_Index[0]) {
       setP_dets(pat_Index[0])
       if (pat_Index[0].userinfo !== '' + undefined) {
-        setDisplayDetails(true)
+        history.push("/doctor/AddingFeatures" , pat_Index[0]  )
       }
     } else {
       alert('No Pateint Found with this Unique ID')
@@ -76,7 +78,34 @@ function DoctorDashboard({ history }) {
       window.removeEventListener('resize', showButton)
     }
   }, [])
-  //
+ const onFileChange = event => {
+    
+    // Update the state
+    // this.setState({ selectedFile: event.target.files[0] });
+   setFile(event.target.files[0])
+   
+  
+  };
+  const onFileUpload = () => {
+    
+    // Create an object of formData
+    const formData = new FormData();
+    console.log(file)
+    // Update the formData object
+    formData.set("report",file)
+  
+    // Details of the uploaded file
+    console.log(formData);
+
+    uploadPatientReport(formData)
+    .then( (res) => {console.log(res)})
+    .catch(err => {console.log(err)})
+  
+    // Request made to the backend api
+    // Send formData object
+    // axios.post("api/uploadfile", formData);
+  };
+  
   return (
     <div>
       <IconContext.Provider value={{ color: '#fff' }}>
@@ -237,8 +266,14 @@ function DoctorDashboard({ history }) {
                   Emergency Number : <b>{p_dets.emergency_no}</b>
                 </p>
               </div>
+              <span>
+              <input type="file"  onChange = {onFileChange}/>
+              <button onClick ={onFileUpload}>Upload Report </button>
+              </span>
             </div>
+           
           </div>
+         
         </>
       ) : (
         ''

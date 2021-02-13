@@ -496,7 +496,8 @@ const PatientDashboard = ({ props, history }) => {
                 Emergency Number : <b>{e_emergency_no}</b>
               </p>
             </div>
-            {success && !editDetails ? (
+            {success && !editDetails  && (
+              <div>
               <div className='inputfield'>
                 <button
                   className='btn'
@@ -504,11 +505,33 @@ const PatientDashboard = ({ props, history }) => {
                     SetValues({ ...values, editDetails: true })
                   }}>
                   Edit your details
-                </button>{' '}
+                </button>
+              </div> 
+              <div className='inputfield'>
+                <button
+                  className='btn'
+                  onClick={() => {
+                  history.push("/patient/dashboard/prescription")
+                  }}>
+                   Prescription
+                </button>
               </div>
-            ) : (
-              ''
-            )}
+              <div className='inputfield'>
+                <button
+                  className='btn'
+                  onClick={() => {
+                  history.push("/patient/dashboard/graph")
+                   
+                  }}>
+                  Graph
+                </button>
+              </div>
+            
+              </div >
+              )
+          
+      
+          }
           </div>
         </div>
       ) : (

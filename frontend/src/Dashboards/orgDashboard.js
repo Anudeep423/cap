@@ -42,6 +42,7 @@ function OrgDashboard({ history }) {
       setP_dets(pat_Index[0])
       if (pat_Index[0].userinfo !== '' + undefined) {
         setDisplayDetails(true)
+        history.push("/org/allDetails",pat_Index[0])
       }
     } else {
       alert('No Pateint Found with this Unique ID')
@@ -208,6 +209,27 @@ function OrgDashboard({ history }) {
                 <p>
                   Emergency Number : <b>{p_dets.emergency_no}</b>
                 </p>
+              </div>
+              <div className='inputfield'>
+              </div> 
+              <div className='inputfield'>
+                <button
+                  className='btn'
+                  onClick={() => {
+                  history.push("/org/dashboard/prescription")
+                  }}>
+                   Prescription
+                </button>
+              </div>
+              <div className='inputfield'>
+                <button
+                  className='btn'
+                  onClick={() => {
+                  history.push("/org/dashboard/graph",p_dets)
+                   
+                  }}>
+                  Graph
+                </button>
               </div>
             </div>
           </div>

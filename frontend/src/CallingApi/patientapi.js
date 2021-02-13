@@ -95,3 +95,29 @@ export const getAllPatientDetails = () => {
     })
     .catch(err => console.log(err));
 }
+
+export const uploadPatientReport = (file) => {
+  console.log(JSON.stringify(file))
+  return fetch("http://localhost:8000/catalog/doctors/uploadReport" , {
+    method : "POST",
+    headers : {
+      Accept : "multipart/form-data",
+      "Content-Type" : "multipart/form-data",
+    },
+    body  : JSON.stringify(file),
+  }  ).then(res => res.json()).catch(err => {console.log(err)})
+  
+}
+
+// export const uploadPrescription = (data) => {
+//   console.log(JSON.stringify(file))
+//   return fetch("http://localhost:8000/catalog/doctors/uploadReport" , {
+//     method : "POST",
+//     headers : {
+//       Accept : "application/json",
+//       "Content-Type" : "application/json",
+//     },
+//     body  : JSON.stringify(file),
+//   }  ).then(res => res.json()).catch(err => {console.log(err)})
+  
+// }
