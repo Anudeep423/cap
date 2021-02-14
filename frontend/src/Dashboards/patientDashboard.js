@@ -75,6 +75,7 @@ const PatientDashboard = ({ props, history }) => {
   let t = {}
   t = JSON.parse(localStorage.getItem('jwt'))
   let uid = t.user._id
+  let UID = t.user.UID
   useEffect(() => {
     getPatDetails(uid)
       .then((res) => {
@@ -511,7 +512,7 @@ const PatientDashboard = ({ props, history }) => {
                 <button
                   className='btn'
                   onClick={() => {
-                  history.push("/patient/dashboard/prescription")
+                  history.push("/patient/dashboard/prescription",UID)
                   }}>
                    Prescription
                 </button>

@@ -1,6 +1,15 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import {Link} from "react-router-dom"
-function PatientPrescription() {
+import {getPres} from "../CallingApi/patientapi"
+function PatientPrescription({history}) {
+
+     useEffect( async () => {
+        await getPres(history.location.state).
+        then(data => {console.log(data)}).
+        catch(err => {console.log(err)})
+     }  )       
+
+    console.log(history)
     return (
         <div>
            <h1>This is pateint Prescription Dashboard</h1> 

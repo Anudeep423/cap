@@ -121,3 +121,27 @@ export const uploadPatientReport = (file) => {
 //   }  ).then(res => res.json()).catch(err => {console.log(err)})
   
 // }
+
+
+export const addPrescription = (data) => {
+
+ return fetch("http://localhost:8000/catalog/patients/prescriptions/create" , {
+  method : "POST",
+    headers : {
+      Accept : "application/json",
+      "Content-Type" : "application/json"
+    },body : JSON.stringify(data),
+  }).then(res => res.json()).catch(err => {console.log(err.message)})
+
+}
+
+export const getPres = (id) => {
+  return fetch(`http://localhost:8000/catalog/patient/${id}/pres`, {
+    method: "GET"
+  })
+    .then(response => {
+      return response.json();
+    })
+    .catch(err => console.log(err));
+}
+
