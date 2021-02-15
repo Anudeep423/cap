@@ -28,21 +28,24 @@ function PatientPrescription({history}) {
        <Link to = "/patient/dashboard"> <button>Patient Dashboard</button> </Link>
        <ol>
        {presData.map( (data,i) => {
-  
+         
         const val = data.medDetails.map( (innerData,i) =>  { return <li>
             
             <div style = {{color : "green"}}>
+           
               { i === 0 ?  <div> 
-                  
-                    <h2>Prescribed At :  {data.createdAt} </h2>
+                    <br></br>
+                    <h2>Prescribed by   : Dr. {data.Doctor}  </h2>
+                    <h2>Data {`&`} Time  :  {data.createdAt} </h2>
              <h3> 
               No of Medication :  {data.medDetails.length} 
             </h3> </div > : "" }
             <h3>  Medicine Name : {innerData.med_name} Duration : {innerData.duration}  </h3>
-
-              {data.medDetails.length === 1 ? <div>  <br></br>  <br></br> </div> : "" }
-             
+            <h3>Dosage : {innerData.Morning_dosage}  {innerData.Evening_dosage}</h3>
+                         
+             {console.log(i,innerData.med_name)}
              </div>
+        
               </li>  }
             
               )

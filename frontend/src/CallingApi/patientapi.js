@@ -124,7 +124,7 @@ export const uploadPatientReport = (file) => {
 
 
 export const addPrescription = (data) => {
-
+  console.log(data)
  return fetch("http://localhost:8000/catalog/patients/prescriptions/create" , {
   method : "POST",
     headers : {

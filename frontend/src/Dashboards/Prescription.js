@@ -4,11 +4,13 @@ import {addPrescription,getPres} from "../CallingApi/patientapi"
 
 
 function Prescription({history}) {
-    const [inputList, setInputList] = useState([  { MedicineName: "", Duration: "" }]);
+
+  const histor = history.location.state
+    const [inputList, setInputList] = useState([  { med_name: "", duration: "" }]);
     const [finalList,setFinalList] = useState({})
     const [result,setResult] = useState({success : ""  , error : "" })
 
-    const {success} = result;
+ 
 
     useEffect(async () => {
      await getPres(history.location.state.userinfo.UID).
@@ -30,30 +32,34 @@ function Prescription({history}) {
       setInputList(list);
     };
   
+    const UID = history.location.state.userinfo.UID;
     // handle click event of the Remove button
     const handleRemoveClick = index => {
       const list = [...inputList];
       list.splice(index, 1);
       setInputList(list);
     };
-
+    const doc = JSON.parse(localStorage.getItem('jwt'))
+    console.log(doc.user.doctor_name)
     const onsubmits = (e) => {
       e.preventDefault()
         var val = []
         val[0] = history.location.state.userinfo.UID;
         // UID : val[0]
-        var final_result = {}
-        final_result =  { "UID" : val[0] ,medDetails : [...inputList] }
+        var final_result
+      final_result  =  { "Doctor"  :  doc.user.doctor_name , "UID" : val[0] ,medDetails : [...inputList] }
         setFinalList(final_result)
-        addPrescription(finalList).then(res => setResult({...result, success : res.message})  ).
+        addPrescription(final_result).then(res => console.log(res)  ).
         catch(err => console.log("ERROR",err))
 
     }
-  
+   
     // handle click event of the Add button
     const handleAddClick = () => {
-      setInputList([...inputList, { MedicineName: "", Duration: "" }]);
+      setInputList([...inputList,  { med_name: "", duration: "" }]);
     };
+
+    const Patient_name = history?.location.state.userinfo.patient_name;
   
     console.log("Prescription",{history})
     return (
@@ -63,29 +69,31 @@ function Prescription({history}) {
              <button onClick = { () => {history.push("/doctor/AddingFeatures",history.location.state)} } >Go back Upload Panal</button> 
              <div className="App">
                  <br></br>
+               <h3>Check {Patient_name}'s  Previos Prescription <button onClick = { () => {history.push("/doctor/previousPrescriptions",histor)} } >Check Previous Prescriptions</button> </h3>  
+                 
       <h3 onClick = { (e) => {e.preventDefault()} } ><a href="" style = {{color : 'blue'}}>Prescription</a></h3>
       <br></br>
       {inputList.map((x, i) => {
         return (
           <div className="box">
             <input
-              name="MedicineName"
+              name="med_name"
               placeholder="Medicine Name"
-              value={x.MedicineName}
+              value={x.med_name}
               onChange={e => handleInputChange(e, i)}
             />
             <input
               className="ml10"
-              name="Duration"
-              placeholder="Duration(In Days)"
-              value={x.Duration}
+              name="duration"
+              placeholder="duration(In Days)"
+              value={x.duration}
               onChange={e => handleInputChange(e, i)}
             />
             <select style={{ marginLeft: 20 }} name="Morning_dosage" id="dosage"  onChange = { (e) => handleInputChange(e,i)}>
   <option value="select">Morning Dosage</option>
-  <option value="morinng - 1">1</option>
-  <option value="morinng - 2">2</option>
-  <option value="morinng - 3">3</option>
+  <option value="Morning - 1">1</option>
+  <option value="Morning - 2">2</option>
+  <option value="Morning - 3">3</option>
 
 </select>
 <select style={{ marginLeft: 20 }} name="Evening_dosage" id="dosage"  onChange = { (e) => handleInputChange(e,i,)}>

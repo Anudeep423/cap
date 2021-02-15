@@ -25,7 +25,7 @@ import PatientGraph from "./Dashboards/PatientGraph"
 import OrgGraph from "./Dashboards/OrgGraph"
 import OrgAllDetails from "./Dashboards/OrgAllDetails"
 import OrgPrescription from "./Dashboards/OrgPrescription"
-
+import PreviousPrescriptions from "./Dashboards/previousPrescriptions"
 
 function App() {
   return (
@@ -42,10 +42,9 @@ function App() {
       <Route exact path = '/org/dashboard/graph' component = {OrgGraph} ></Route>
       <Route exact path = '/org/allDetails' component = {OrgAllDetails} ></Route>
       <Route exact path = '/org/dashboard/prescription' component = {OrgPrescription} ></Route>
+      <Route exact path = '/doctor/previousPrescriptions' component = {PreviousPrescriptions} ></Route>
 
-
-
-
+    
 
       <Route
         exact
