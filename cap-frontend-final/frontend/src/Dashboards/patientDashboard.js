@@ -51,6 +51,7 @@ const PatientDashboard = ({ props, history }) => {
     editDetails,
   } = values;
 
+  // console.log(age);
   const [edit, setEdits] = useState({
     e_age: "",
     e_gender: "",
@@ -60,7 +61,6 @@ const PatientDashboard = ({ props, history }) => {
     e_medication: "",
     e_emergency_no: "",
   });
-
   const {
     e_id,
     e_age,
@@ -72,6 +72,8 @@ const PatientDashboard = ({ props, history }) => {
     e_emergency_no,
   } = edit;
 
+  // console.log(e_age);
+
   //  SetValues({...values,age : res[0].age,gender : res[0].gender , bloodgroup : res[0].bloodgroup,allergies : res[0].allergies,
   // occur_cond : res[0].occur_cond , medication : res[0].medication , emergency_no : res[0].emergency_no
   // })
@@ -81,7 +83,7 @@ const PatientDashboard = ({ props, history }) => {
   useEffect(() => {
     getPatDetails(uid)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res.message || res.length === 0) {
           SetValues({
             ...values,
@@ -93,7 +95,7 @@ const PatientDashboard = ({ props, history }) => {
           SetValues({ ...values, success: true, a: age });
         }
         const e = { ...res[0] };
-        console.log(e._id);
+        // console.log(e.age);
         setEdits({
           e_id: e._id,
           e_age: e.age,
@@ -104,11 +106,10 @@ const PatientDashboard = ({ props, history }) => {
           e_medication: e.medication,
           e_emergency_no: e.emergency_no,
         });
-        console.log(res);
+        // console.log(res);
       })
-
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, [message, editDetails]);
 
@@ -116,7 +117,7 @@ const PatientDashboard = ({ props, history }) => {
   //   const patient_email = email
   //   const patient_phone_no = phone_no
 
-  console.log("PatientDashboard", t.user._id);
+  // console.log("PatientDashboard", t.user._id);
 
   const [selectedDate, setSelectedDate] = useState(new Date());
 
@@ -136,7 +137,7 @@ const PatientDashboard = ({ props, history }) => {
   };
 
   let a = calculateAge(selectedDate);
-  console.log(a);
+  // console.log(a);
   const handleChange_age = (selectedDate) => {
     setSelectedDate(selectedDate);
   };
@@ -145,14 +146,15 @@ const PatientDashboard = ({ props, history }) => {
   };
   const handleChange = (e) => {
     const store = e.target.name;
-    SetValues({ ...values, [store]: e.target.value, age: a });
+    SetValues({ ...values, [store]: e.target.value });
   };
 
   const e_handleChange = (e) => {
     const store = e.target.name;
     setEdits({ ...edit, [store]: e.target.value, e_age: a });
   };
-  const Age = parseInt(age);
+  const Age = parseInt(a);
+  // console.log(Age);
   const Emergency_no = parseInt(emergency_no);
   const onSubmit = (e) => {
     if (
@@ -170,7 +172,7 @@ const PatientDashboard = ({ props, history }) => {
     e.preventDefault();
     pat_dets({
       id: uid,
-      age: Age,
+      age: a,
       gender,
       bloodgroup,
       allergies,
@@ -204,8 +206,7 @@ const PatientDashboard = ({ props, history }) => {
       updatePatDetails(
         {
           id: e_id,
-
-          age: parseInt(e_age),
+          age: Age,
           gender: e_gender,
           bloodgroup: e_bloodgroup,
           allergies: e_allergies,
@@ -216,7 +217,7 @@ const PatientDashboard = ({ props, history }) => {
         e_id
       )
         .then((data) => {
-          console.log(data);
+          console.log(Age);
           if (data.msg) {
             SetValues({ ...values, error: data.msg, message: "" });
           } else {
@@ -252,22 +253,48 @@ const PatientDashboard = ({ props, history }) => {
           <label>Age:</label>
           <input
             name="age"
+            type="text"
             onChange={handleChange}
             readOnly="true"
-            value={a}
+            value={Age}
             className="input"
           />
         </div>
         <div className="inputfield">
           <label>Gender</label>
-          <input
-            required
-            type="text"
-            name="gender"
-            onChange={handleChange}
-            value={gender}
-            className="input"
-          />
+          <div className="gender-container">
+            <label>
+              <input
+                name="gender"
+                type="radio"
+                value="M"
+                onChange={handleChange}
+                checked={values.gender === "M"}
+              />
+              Male
+            </label>
+
+            <label>
+              <input
+                name="gender"
+                type="radio"
+                value="F"
+                onChange={handleChange}
+                checked={values.gender === "F"}
+              />
+              Female
+            </label>
+            <label>
+              <input
+                name="gender"
+                type="radio"
+                value="O"
+                onChange={handleChange}
+                checked={values.gender === "O"}
+              />
+              Other
+            </label>
+          </div>
         </div>
         <div className="inputfield">
           <label>Bloodgroup</label>
@@ -321,14 +348,18 @@ const PatientDashboard = ({ props, history }) => {
             value={emergency_no}
           />
         </div>
+
+        {error ? (
+          <p className="error_message">{error}</p>
+        ) : (
+          <p className="message">{message}</p>
+        )}
         <div className="inputfield">
           <button onClick={onSubmit} className="btn">
             Submit
           </button>
         </div>
       </div>
-
-      {error ? <p>{error}</p> : <p>{message}</p>}
     </div>
   );
 
@@ -346,6 +377,7 @@ const PatientDashboard = ({ props, history }) => {
             showYearDropdown
             showMonthDropdown
             className="input"
+            value={e_age}
           />
         </div>
         <div className="inputfield">
@@ -360,14 +392,38 @@ const PatientDashboard = ({ props, history }) => {
         </div>
         <div className="inputfield">
           <label>Gender</label>
-          <input
-            required
-            type="text"
-            name="gender"
-            onChange={handleChange}
-            value={gender}
-            className="input"
-          />
+          <div className="gender-container">
+            <label>
+              <input
+                name="e_gender"
+                type="radio"
+                value="M"
+                onChange={e_handleChange}
+                checked={edit.e_gender === "M"}
+              />
+              Male
+            </label>
+            <label>
+              <input
+                name="e_gender"
+                type="radio"
+                value="F"
+                onChange={e_handleChange}
+                checked={edit.e_gender === "F"}
+              />
+              Female
+            </label>
+            <label>
+              <input
+                name="e_gender"
+                type="radio"
+                value="O"
+                onChange={e_handleChange}
+                checked={edit.e_gender === "O"}
+              />
+              Other
+            </label>
+          </div>
         </div>
         <div className="inputfield">
           <label>Bloodgroup</label>
@@ -421,12 +477,13 @@ const PatientDashboard = ({ props, history }) => {
             value={e_emergency_no}
           />
         </div>
+        {message ? <p className="message">{message}</p> : ""}
         <div className="inputfield">
           <button onClick={e_onSubmit} className="btn">
             Submit
           </button>
         </div>
-        {message ? <p>{message}</p> : ""}
+
         <Link className="inputfield">
           <button
             className="btn"
@@ -534,7 +591,7 @@ const PatientDashboard = ({ props, history }) => {
           <div className="form">
             <div className="inputfield">
               <p>
-                Age : <b>{a}</b>
+                Age : <b>{e_age}</b>
               </p>
             </div>
             <div className="inputfield">

@@ -52,9 +52,9 @@ const RegisterUser = (props) => {
     )
       .then((data) => {
         if (data.msg) {
-          SetValues([{ ...values, error: data.msg, message: "" }]);
+          SetValues({ ...values, error: data.msg, message: "" });
         } else {
-          SetValues([{ ...values, error: "", message: data.message }]);
+          SetValues({ ...values, error: "", message: data.message });
         }
       })
       .catch((err) => console.log(err.message));
@@ -131,13 +131,14 @@ const RegisterUser = (props) => {
               value={phone_no}
             />
           </div>
+          {error ? <p className="message">{error}</p> : ""}
+          {message ? <p className="message">{message}</p> : ""}
           <div className="inputfield">
             <button onClick={onSubmit} className="btn">
               Submit
             </button>
           </div>
-          {error ? <p>{error}</p> : ""}
-          {message ? <p>{message}</p> : ""}
+
           <Link to="/users/login" className="inputfield">
             <p>Already Registered? Login</p>
           </Link>
