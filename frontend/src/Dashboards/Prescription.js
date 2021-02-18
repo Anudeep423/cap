@@ -9,6 +9,7 @@ function Prescription({history}) {
     const [inputList, setInputList] = useState([  { med_name: "", duration: "" }]);
     const [finalList,setFinalList] = useState({})
     const [result,setResult] = useState({success : ""  , error : "" })
+    const [message,setMessage] = useState("")
 
  
 
@@ -49,7 +50,7 @@ function Prescription({history}) {
         var final_result
       final_result  =  { "Doctor"  :  doc.user.doctor_name , "UID" : val[0] ,medDetails : [...inputList] }
         setFinalList(final_result)
-        addPrescription(final_result).then(res => console.log(res)  ).
+        addPrescription(final_result).then(res => {setMessage(res.message)}  ).
         catch(err => console.log("ERROR",err))
 
     }
@@ -115,6 +116,7 @@ function Prescription({history}) {
       
       <button onClick = {onsubmits}>Submit</button>
       <div style={{ marginTop: 20 }}>{JSON.stringify(inputList)}</div>
+      {message ? <p style = {{color : "green"}} >{message}</p>  : ""}
       { JSON.stringify(finalList) }
       <p style = {{color : 'green',font : "bold" }}>{result.success}</p>
     </div>

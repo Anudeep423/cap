@@ -521,7 +521,7 @@ const PatientDashboard = ({ props, history }) => {
                 <button
                   className='btn'
                   onClick={() => {
-                  history.push("/patient/dashboard/graph")
+                  history.push("/patient/dashboard/graph",UID)
                    
                   }}>
                   Graph

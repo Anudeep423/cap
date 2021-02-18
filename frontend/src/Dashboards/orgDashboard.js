@@ -17,8 +17,7 @@ function OrgDashboard({ history }) {
   useEffect(() => {
     const doc = JSON.parse(localStorage.getItem('jwt'))
     setOrgDetails(doc.user.org_name)
-    getAllPatientDetails()
-      .then((res) => {
+    getAllPatientDetails().then((res) => {
         setPatientBasicDetails(res)
       })
       .catch((err) => {
@@ -26,17 +25,21 @@ function OrgDashboard({ history }) {
       })
   }, [])
 
+  console.log(PatientBasicDetails)
+
   const onSubmit = () => {
     const patDets = PatientBasicDetails
     console.log(patDets.data)
 
     const pat_Index = patDets.data.filter((data, i) => {
-      if (values === '' + data.userinfo.UID) {
-        return i
+      console.log(data.userinfo.UID,values)
+      if (values === "" +  data.userinfo.UID) {
+        console.log("Found")
+        return data.userinfo
       }
     })
 
-    console.log(pat_Index[0])
+    console.log(pat_Index)
 
     if (pat_Index[0]) {
       setP_dets(pat_Index[0])

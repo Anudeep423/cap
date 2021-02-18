@@ -15,7 +15,7 @@ function OrgAllDetails({history}) {
     return (
         <>
         <div>
-            <h1>This is doctor upload panal</h1>
+            <h1>This is Organisation view panal</h1>
           <Link to = "/org/dashboard"> <button>Go back To Dashboard</button> </Link> 
           <br></br>
           <br></br>
