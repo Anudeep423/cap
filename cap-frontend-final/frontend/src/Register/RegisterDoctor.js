@@ -5,9 +5,10 @@ import { Link } from "react-router-dom";
 import { signup } from "../CallingApi/patientapi";
 import Navbar from "../Landing Page/Navbar";
 import Footer from "../Landing Page/Footer";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
 const RegisterDoctor = (props) => {
-  console.log(props);
+  // console.log(props);
   const [values, setValues] = useState({
     Name: "",
     Email: "",
@@ -65,7 +66,7 @@ const RegisterDoctor = (props) => {
       .catch((err) => console.log(err.message));
   };
 
-  console.log(props);
+  //
   return (
     <div>
       <Navbar />
@@ -73,7 +74,8 @@ const RegisterDoctor = (props) => {
         <div className="back">
           <Link to="/Register">
             {" "}
-            <div className="inputfield">
+            <div className="inputfield back-button">
+              <p>{<ArrowBackIcon />}</p>
               <p>Back to Register Dashboard</p>
             </div>{" "}
           </Link>

@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { signup } from "../CallingApi/patientapi";
 import Navbar from "../Landing Page/Navbar";
 import Footer from "../Landing Page/Footer";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
 function RegisterOrganisation(props) {
   const [values, setValues] = useState({
@@ -52,15 +53,19 @@ function RegisterOrganisation(props) {
       .then((data) => {
         if (data.msg) {
           setValues({ ...values, error: data.msg, message: "" });
+          alert(error);
         } else {
           setValues({ ...values, error: "", message: data.message });
+          alert(message);
         }
       })
       .catch((err) => console.log(err.message));
   };
+
   const onchange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
+
   return (
     <div>
       <Navbar />
@@ -68,7 +73,8 @@ function RegisterOrganisation(props) {
         <div className="back">
           <Link to="/Register">
             {" "}
-            <div className="inputfield">
+            <div className="inputfield back-button">
+              <p>{<ArrowBackIcon />}</p>
               <p>Back to Register Dashboard</p>
             </div>{" "}
           </Link>
@@ -88,7 +94,6 @@ function RegisterOrganisation(props) {
             />
           </div>
           <div className="inputfield">
-            789
             <label>Organization Email</label>
             <input
               name="email"

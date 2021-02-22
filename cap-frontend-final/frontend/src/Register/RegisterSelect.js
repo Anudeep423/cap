@@ -3,6 +3,12 @@ import { Link } from "react-router-dom";
 import "./styles.css";
 import Navbar from "../Landing Page/Navbar";
 import Footer from "../Landing Page/Footer";
+import Button from "@material-ui/core/Button";
+import PersonIcon from "@material-ui/icons/Person";
+import LocalHospitalIcon from "@material-ui/icons/LocalHospital";
+import BusinessIcon from "@material-ui/icons/Business";
+import PersonAddIcon from "@material-ui/icons/PersonAdd";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
 export default function RegisterSelect() {
   return (
@@ -12,29 +18,37 @@ export default function RegisterSelect() {
         <div className="back">
           <Link to="/">
             {" "}
-            <div className="inputfield">
+            <div className="inputfield back-button">
+              <p>{<ArrowBackIcon />}</p>
               <p>Back to Home</p>
             </div>{" "}
           </Link>
         </div>
         <div className="title">
+          <div>{<PersonAddIcon />}</div>
           <div>Register As</div>
         </div>
 
         <div className="form">
           <div className="inputfield">
             <Link to="/users/register/patient" className="btn">
-              <button className="btn">User</button>
+              <Button startIcon={<PersonIcon />} className="btn">
+                User
+              </Button>
             </Link>
           </div>
           <div className="inputfield">
             <Link to="/users/register/doctor" className="btn">
-              <button className="btn">Doctor</button>
+              <Button startIcon={<LocalHospitalIcon />} className="btn">
+                Doctor
+              </Button>
             </Link>
           </div>
           <div className="inputfield">
             <Link to="/users/register/org" className="btn">
-              <button className="btn">Organisation</button>
+              <Button startIcon={<BusinessIcon />} className="btn">
+                Organisation
+              </Button>
             </Link>
           </div>
         </div>

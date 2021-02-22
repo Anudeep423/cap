@@ -41,6 +41,7 @@ function LoginForm(props) {
       alert("Enter all details");
     }
   };
+
   const performRedirects = () => {
     if (performRedirect) {
       if (user.patient_name) {
@@ -92,11 +93,8 @@ function LoginForm(props) {
               Submit
             </button>
           </div>
-          {error ? (
-            <div id="error_message">{error}</div>
-          ) : (
-            <div id="error_message">{success}</div>
-          )}
+          {error ? <div className="error_message">{error}</div> : ""}
+          {success ? <div className="message">{success}</div> : ""}
           <Link to="/register">
             {" "}
             <div className="inputfield">

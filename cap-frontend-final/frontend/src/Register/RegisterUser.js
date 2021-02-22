@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { signup } from "../CallingApi/patientapi";
 import Navbar from "../Landing Page/Navbar";
 import Footer from "../Landing Page/Footer";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
 const RegisterUser = (props) => {
   console.log(props);
@@ -67,7 +68,8 @@ const RegisterUser = (props) => {
         <div className="back">
           <Link to="/Register">
             {" "}
-            <div className="inputfield">
+            <div className="inputfield back-button">
+              <p>{<ArrowBackIcon />}</p>
               <p>Back to Register Dashboard</p>
             </div>{" "}
           </Link>
@@ -131,7 +133,7 @@ const RegisterUser = (props) => {
               value={phone_no}
             />
           </div>
-          {error ? <p className="message">{error}</p> : ""}
+          {error ? <p className="error_message">{error}</p> : ""}
           {message ? <p className="message">{message}</p> : ""}
           <div className="inputfield">
             <button onClick={onSubmit} className="btn">
