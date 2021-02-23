@@ -2,31 +2,54 @@ import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { addGraphValues, getPatGraph } from "../CallingApi/patientapi";
 import Chart from "./chart";
+import "./styles.css";
 
 function Graph({ history }) {
   const doc = JSON.parse(localStorage.getItem("jwt"));
   const doctorName = doc.user.doctor_name;
   const UID = history.location.state.userinfo.UID;
 
-  const [graphValues, setGraphValues] = useState();
+  const [graphValues, setGraphValues] = useState([]);
 
+  // Fetching Api here
   useEffect(() => {
     getPatGraph(UID)
       .then((res) => {
-        const lastData = res.data.pop();
-        const a = lastData.Blood_pressure;
-        const b = lastData.Blood_sugar;
-        const c = lastData.Cholesterol;
-        const d = lastData.Heart_rate;
-        const graphData = [a, b, c, d];
-        setGraphValues(graphData);
+        setGraphValues(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
-  console.log(graphValues);
+  // console.log(graphValues);
+
+  //calculating data for graph value
+  // const lastData = graphValues.pop();
+  // const a = lastData.Heart_rate;
+  // const b = lastData.Blood_pressure;
+  // const c = lastData.Cholesterol;
+  // const d = lastData.Blood_sugar;
+  // const graphData = [a, b, c, d];
+
+  let dateArr = [];
+  let heart_rate = [];
+  let blood_pressure = [];
+  let cholesterol = [];
+  let blood_sugar = [];
+
+  for (var i = 0; i < graphValues.length; i++) {
+    const dt = graphValues[i].createdAt;
+    const date = dt.substring(0, 10);
+
+    heart_rate.push(graphValues[i].Heart_rate);
+    blood_pressure.push(graphValues[i].Blood_pressure);
+    cholesterol.push(graphValues[i].Cholesterol);
+    blood_sugar.push(graphValues[i].Blood_sugar);
+    dateArr.push(date);
+  }
+  // console.log(dateArr);
+
   const [values, setValues] = useState(
     {
       Heart_rate: "",
@@ -58,57 +81,95 @@ function Graph({ history }) {
 
   return (
     <div>
-      <h1>Add Graph here</h1>
-      <Link to="/doctor/dashboard">
-        {" "}
-        <button>Go back To Dashboard</button>{" "}
-      </Link>
-      <button
-        onClick={() => {
-          history.push("/doctor/AddingFeatures", history.location.state);
-        }}
-      >
-        Go back Upload Panal
-      </button>
-      <br></br>
-      <br></br>
-      <br></br>
-      <input
-        placeholder="Heart_rate"
-        name="Heart_rate"
-        onChange={onChange}
-        value={Heart_rate}
-      ></input>
-      <br></br>
-      <input
-        placeholder="Blood_pressure"
-        name="Blood_pressure"
-        onChange={onChange}
-        value={Blood_pressure}
-      ></input>
-      <br></br>
-      <input
-        placeholder="Cholesterol"
-        name="Cholesterol"
-        onChange={onChange}
-        value={Cholesterol}
-      ></input>
-      <br></br>
-      <input
-        placeholder="Blood_sugar"
-        name="Blood_sugar"
-        onChange={onChange}
-        value={Blood_sugar}
-      ></input>
-      <br></br>
-      <br></br>
-      <button onClick={onClicks}>Submit </button>
-      {result ? <p style={{ color: "green" }}>{result}</p> : ""}
-      {/* {JSON.stringify(resultValues)}
+      <div>
+        <h1>Add Graph here</h1>
+        <Link to="/doctor/dashboard">
+          {" "}
+          <button>Go back To Dashboard</button>{" "}
+        </Link>
+        <button
+          onClick={() => {
+            history.push("/doctor/AddingFeatures", history.location.state);
+          }}
+        >
+          Go back Upload Panal
+        </button>
+        <br></br>
+        <br></br>
+        <br></br>
+        <input
+          placeholder="Heart_rate"
+          name="Heart_rate"
+          onChange={onChange}
+          value={Heart_rate}
+        ></input>
+        <br></br>
+        <input
+          placeholder="Blood_pressure"
+          name="Blood_pressure"
+          onChange={onChange}
+          value={Blood_pressure}
+        ></input>
+        <br></br>
+        <input
+          placeholder="Cholesterol"
+          name="Cholesterol"
+          onChange={onChange}
+          value={Cholesterol}
+        ></input>
+        <br></br>
+        <input
+          placeholder="Blood_sugar"
+          name="Blood_sugar"
+          onChange={onChange}
+          value={Blood_sugar}
+        ></input>
+        <br></br>
+        <br></br>
+        <button onClick={onClicks}>Submit </button>
+        {result ? <p style={{ color: "green" }}>{result}</p> : ""}
+        {/* {JSON.stringify(resultValues)}
              {JSON.stringify(values)} */}
-      {/* {JSON.stringify(graphValues)} */}
-
-      <Chart data={graphValues} />
+        {/* {JSON.stringify(graphValues)} */}
+      </div>
+      <div className="chart_box">
+        <div>
+          <div>
+            <Chart
+              className="chart"
+              labels={dateArr}
+              name={"Heart Rate"}
+              dataVal={heart_rate}
+            />
+          </div>
+          <div>
+            <Chart
+              className="chart"
+              labels={dateArr}
+              name={"Blood Pressure"}
+              dataVal={blood_pressure}
+            />
+          </div>
+        </div>
+        <div>
+          <div>
+            <Chart
+              className="chart"
+              labels={dateArr}
+              name={"Cholesterol"}
+              dataVal={cholesterol}
+            />
+          </div>
+          <div>
+            <Chart
+              className="chart"
+              labels={dateArr}
+              name={"Blood Bugar"}
+              dataVal={blood_sugar}
+            />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
