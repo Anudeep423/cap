@@ -1,14 +1,14 @@
-@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap");
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap');
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 body {
   background: #1c2237;
-  padding: 0 10px;
+  padding: 0px;
 }
 .message {
   font-family: Arial, Helvetica, sans-serif;
@@ -34,7 +34,7 @@ body {
   max-width: 600px;
   width: 100%;
   background: #fff;
-  margin: 50px auto;
+  margin: 100px auto;
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.125);
   padding: 30px;
   border-radius: 5px;
@@ -90,7 +90,7 @@ body {
 }
 
 .wrapper .form .inputfield .custom_select:before {
-  content: "";
+  content: '';
   position: absolute;
   top: 12px;
   right: 10px;
@@ -130,7 +130,7 @@ body {
   display: block;
   cursor: pointer;
 }
-.wrapper .form .inputfield .check input[type="checkbox"] {
+.wrapper .form .inputfield .check input[type='checkbox'] {
   position: absolute;
   top: 0;
   left: 0;
@@ -144,7 +144,7 @@ body {
   position: relative;
 }
 .wrapper .form .inputfield .check .checkmark:before {
-  content: "";
+  content: '';
   position: absolute;
   top: 1px;
   left: 2px;
@@ -155,7 +155,7 @@ body {
   transform: rotate(-45deg);
   display: none;
 }
-.wrapper .form .inputfield .check input[type="checkbox"]:checked ~ .checkmark {
+.wrapper .form .inputfield .check input[type='checkbox']:checked ~ .checkmark {
   background: #1c2237;
 }
 
@@ -163,7 +163,7 @@ body {
   .form
   .inputfield
   .check
-  input[type="checkbox"]:checked
+  input[type='checkbox']:checked
   ~ .checkmark:before {
   display: block;
 }
