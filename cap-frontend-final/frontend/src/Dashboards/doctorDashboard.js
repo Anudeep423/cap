@@ -116,7 +116,7 @@ function DoctorDashboard({ history }) {
         <nav className='navbar'>
           <div className='navbar-container container'>
             <Link
-              to='/patient/dashboard'
+              to='/doctor/dashboard'
               className='navbar-logo'
               onClick={closeMobileMenu}>
               {doctorDetails}'s Dashboard

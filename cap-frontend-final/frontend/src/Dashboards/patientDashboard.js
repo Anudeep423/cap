@@ -5,11 +5,10 @@ import {
   getPatDetails,
   updatePatDetails,
 } from '../CallingApi/patientapi'
-import PatientPanel from '../Panel/PatientPanels/PatientPanel'
-//import { //FaBars, FaTimes } from 'react-icons/fa'
-//import { IconContext } from 'react-icons/lib'
-//import { Button } from '../Landing Page/Button'
-//import '../Landing Page/Navbar.css'
+import { FaBars, FaTimes } from 'react-icons/fa'
+import { IconContext } from 'react-icons/lib'
+import { Button } from '../Landing Page/Button'
+import '../Landing Page/Navbar.css'
 import './styles.css'
 //import { signup } from '../CallingApi/patientapi'
 import { Link } from 'react-router-dom'
@@ -509,11 +508,33 @@ const PatientDashboard = ({ props, history }) => {
       </div>
     </div>
   )
+  //for navbar
+  const [click, setClick] = useState(false)
+  const [button, setButton] = useState(true)
+
+  const handleClick = () => setClick(!click)
+  const closeMobileMenu = () => setClick(false)
+
+  const showButton = () => {
+    if (window.innerWidth <= 960) {
+      setButton(false)
+    } else {
+      setButton(true)
+    }
+  }
+
+  useEffect(() => {
+    showButton()
+    window.addEventListener('resize', showButton)
+    return () => {
+      window.removeEventListener('resize', showButton)
+    }
+  }, [])
+  //
 
   return (
     <div>
-      <PatientPanel />
-      {/*<IconContext.Provider value={{ color: '#fff' }}>
+      <IconContext.Provider value={{ color: '#fff' }}>
         <nav className='navbar'>
           <div className='navbar-container container'>
             <Link
@@ -526,6 +547,42 @@ const PatientDashboard = ({ props, history }) => {
               {click ? <FaTimes /> : <FaBars />}
             </div>
             <ul className={click ? 'nav-menu active' : 'nav-menu'}>
+              <li className='nav-item'>
+                <div
+                  className='nav-links'
+                  onClick={
+                    (closeMobileMenu,
+                    () => {
+                      history.push('/patient/dashboard', history.location.state)
+                    })
+                  }>
+                  Basic Details
+                </div>
+              </li>
+              <li className='nav-item'>
+                <div
+                  className='nav-links'
+                  onClick={
+                    (closeMobileMenu,
+                    () => {
+                      history.push('/patient/dashboard/graph', UID)
+                    })
+                  }>
+                  Health Status
+                </div>
+              </li>
+              <li className='nav-item'>
+                <div
+                  className='nav-links'
+                  onClick={
+                    (closeMobileMenu,
+                    () => {
+                      history.push('/patient/dashboard/prescription', UID)
+                    })
+                  }>
+                  Prescriptions
+                </div>
+              </li>
               <li className='nav-btn'>
                 {button ? (
                   <Button
@@ -556,7 +613,7 @@ const PatientDashboard = ({ props, history }) => {
             </ul>
           </div>
         </nav>
-      </IconContext.Provider>*/}
+      </IconContext.Provider>
 
       {success ? <span></span> : userForm('Enter Your basic details')}
       {success && !editDetails ? (

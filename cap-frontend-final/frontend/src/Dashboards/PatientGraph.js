@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { addGraphValues, getPatGraph } from '../CallingApi/patientapi'
+import { FaBars, FaTimes } from 'react-icons/fa'
+import { IconContext } from 'react-icons/lib'
+import { Button } from '../Landing Page/Button'
+import '../Landing Page/Navbar.css'
+import { addGraphValues, getPatGraph, signout } from '../CallingApi/patientapi'
 import Chart from './chart'
 
 function PatientGraph({ history }) {
@@ -45,8 +49,119 @@ function PatientGraph({ history }) {
   }
   // console.log(dateArr);
 
+  //for navbar
+  const [click, setClick] = useState(false)
+  const [button, setButton] = useState(true)
+
+  const handleClick = () => setClick(!click)
+  const closeMobileMenu = () => setClick(false)
+
+  const showButton = () => {
+    if (window.innerWidth <= 960) {
+      setButton(false)
+    } else {
+      setButton(true)
+    }
+  }
+
+  useEffect(() => {
+    showButton()
+    window.addEventListener('resize', showButton)
+    return () => {
+      window.removeEventListener('resize', showButton)
+    }
+  }, [])
+  //
+
   return (
     <div>
+      <IconContext.Provider value={{ color: '#fff' }}>
+        <nav className='navbar'>
+          <div className='navbar-container container'>
+            <Link
+              to='/patient/dashboard'
+              className='navbar-logo'
+              onClick={closeMobileMenu}>
+              Dashboard
+            </Link>
+            <div className='menu-icon' onClick={handleClick}>
+              {click ? <FaTimes /> : <FaBars />}
+            </div>
+            <ul className={click ? 'nav-menu active' : 'nav-menu'}>
+              <li className='nav-item'>
+                <div
+                  className='nav-links'
+                  onClick={
+                    (closeMobileMenu,
+                    () => {
+                      history.push('/patient/dashboard', history.location.state)
+                    })
+                  }>
+                  Basic Details
+                </div>
+              </li>
+              <li className='nav-item'>
+                <div
+                  className='nav-links'
+                  onClick={
+                    (closeMobileMenu,
+                    () => {
+                      history.push(
+                        '/patient/dashboard/graph',
+                        history.location.state
+                      )
+                    })
+                  }>
+                  Health Status
+                </div>
+              </li>
+              <li className='nav-item'>
+                <div
+                  className='nav-links'
+                  onClick={
+                    (closeMobileMenu,
+                    () => {
+                      history.push(
+                        '/patient/dashboard/prescription',
+                        history.location.state
+                      )
+                    })
+                  }>
+                  Prescriptions
+                </div>
+              </li>
+              <li className='nav-btn'>
+                {button ? (
+                  <Button
+                    buttonStyle='btn--outline'
+                    onClick={() => {
+                      signout(() => {
+                        history.push('/users/login')
+                      })
+                    }}>
+                    Sign Out
+                  </Button>
+                ) : (
+                  <Button
+                    buttonStyle='btn--outline'
+                    buttonSize='btn--mobile'
+                    onClick={
+                      (closeMobileMenu,
+                      () => {
+                        signout(() => {
+                          history.push('/users/login')
+                        })
+                      })
+                    }>
+                    Sign Out
+                  </Button>
+                )}
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </IconContext.Provider>
+
       {/*<div>
         <h1>This is Patient Graph Dashboard</h1>
         <Link to='/patient/dashboard'>

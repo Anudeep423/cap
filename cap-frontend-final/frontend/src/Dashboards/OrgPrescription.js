@@ -1,4 +1,9 @@
 import React, { useState, useEffect } from 'react'
+import { signout } from '../CallingApi/patientapi'
+import { FaBars, FaTimes } from 'react-icons/fa'
+import { IconContext } from 'react-icons/lib'
+import { Button } from '../Landing Page/Button'
+import '../Landing Page/Navbar.css'
 import { Link } from 'react-router-dom'
 import { getPres } from '../CallingApi/patientapi'
 
@@ -18,9 +23,119 @@ function OrgPrescription({ history }) {
       })
     setDataReceived(true)
   }, [])
+
+  //for navbar
+  const [click, setClick] = useState(false)
+  const [button, setButton] = useState(true)
+
+  const handleClick = () => setClick(!click)
+  const closeMobileMenu = () => setClick(false)
+
+  const showButton = () => {
+    if (window.innerWidth <= 960) {
+      setButton(false)
+    } else {
+      setButton(true)
+    }
+  }
+
+  useEffect(() => {
+    showButton()
+    window.addEventListener('resize', showButton)
+    return () => {
+      window.removeEventListener('resize', showButton)
+    }
+  }, [])
+  //
   return (
     <div>
-      <h1>View Prescription Here</h1>
+      <IconContext.Provider value={{ color: '#fff' }}>
+        <nav className='navbar'>
+          <div className='navbar-container container'>
+            <Link
+              to='/org/dashboard'
+              className='navbar-logo'
+              onClick={closeMobileMenu}>
+              Dashboard
+            </Link>
+            <div className='menu-icon' onClick={handleClick}>
+              {click ? <FaTimes /> : <FaBars />}
+            </div>
+            <ul className={click ? 'nav-menu active' : 'nav-menu'}>
+              <li className='nav-item'>
+                <div
+                  className='nav-links'
+                  onClick={
+                    (closeMobileMenu,
+                    () => {
+                      history.push('/org/allDetails', history.location.state)
+                    })
+                  }>
+                  Basic Details
+                </div>
+              </li>
+              <li className='nav-item'>
+                <div
+                  className='nav-links'
+                  onClick={
+                    (closeMobileMenu,
+                    () => {
+                      history.push(
+                        '/org/dashboard/graph',
+                        history.location.state
+                      )
+                    })
+                  }>
+                  Health Status
+                </div>
+              </li>
+              <li className='nav-item'>
+                <div
+                  className='nav-links'
+                  onClick={
+                    (closeMobileMenu,
+                    () => {
+                      history.push(
+                        '/org/dashboard/prescription',
+                        history.location.state
+                      )
+                    })
+                  }>
+                  Prescriptions
+                </div>
+              </li>
+              <li className='nav-btn'>
+                {button ? (
+                  <Button
+                    buttonStyle='btn--outline'
+                    onClick={() => {
+                      signout(() => {
+                        history.push('/users/login')
+                      })
+                    }}>
+                    Sign Out
+                  </Button>
+                ) : (
+                  <Button
+                    buttonStyle='btn--outline'
+                    buttonSize='btn--mobile'
+                    onClick={
+                      (closeMobileMenu,
+                      () => {
+                        signout(() => {
+                          history.push('/users/login')
+                        })
+                      })
+                    }>
+                    Sign Out
+                  </Button>
+                )}
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </IconContext.Provider>
+      {/*<h1>View Prescription Here</h1>
       <button
         onClick={() => {
           history.push('/org/dashboard')
@@ -32,7 +147,7 @@ function OrgPrescription({ history }) {
           history.push('/org/allDetails', history.location.state)
         }}>
         Organisation all details Dashboard
-      </button>
+      </button>*/}
       <ol>
         {presData.map((data, i) => {
           const val = data.medDetails.map((innerData, i) => {
