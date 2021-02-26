@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Line } from "react-chartjs-2";
 
 const Chart = (props) => {
   // console.log(data);
+  const name = props.name;
   const labels = props.labels;
   const dataVal = props.dataVal;
   const Chartdata = {
@@ -10,6 +11,7 @@ const Chart = (props) => {
     datasets: [
       {
         label: props.name,
+        fill: "false",
         backgroundColor: [
           "rgba(255, 99, 132, 0.2)",
           "rgba(54, 162, 235, 0.2)",
@@ -40,12 +42,11 @@ const Chart = (props) => {
       >
         <Line
           data={Chartdata}
-          type="line"
           options={{
             maintainAspectRatio: false,
             title: {
               display: true,
-              text: "Patient health chart",
+              text: name,
               fontSize: 25,
             },
             scales: {
