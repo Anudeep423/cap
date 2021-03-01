@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import './styles.css'
+import '../styles.css'
 //import Home from '../home'
 import { Link } from 'react-router-dom'
 import { signup } from '../CallingApi/patientapi'

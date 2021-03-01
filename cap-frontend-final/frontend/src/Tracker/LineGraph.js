@@ -12,7 +12,7 @@ export default function LineGraph(props) {
               label: 'Corona Virus accross the Country',
               fill: false,
               lineTension: 0.1,
-              backgroundColor: 'rgba(75,192,192,0.4)',
+              backgroundColor: 'rgba(250,255,255,1) !important',
               borderColor: 'rgba(75,192,192,1)',
               borderCapStyle: 'butt',
               borderDash: [],

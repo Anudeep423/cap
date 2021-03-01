@@ -1,7 +1,7 @@
 export const homeObjOne = {
-  lightBg: false,
-  lightText: true,
-  lightTextDesc: true,
+  lightBg: true,
+  lightText: false,
+  lightTextDesc: false,
   topLine: 'Keep Your Meidcal Data Safe',
   headline: 'And Share It in case of an Emergency',
   description:
@@ -13,9 +13,9 @@ export const homeObjOne = {
 }
 
 export const homeObjTwo = {
-  lightBg: false,
-  lightText: true,
-  lightTextDesc: true,
+  lightBg: true,
+  lightText: false,
+  lightTextDesc: false,
   topLine: 'Join Us and Our Users',
   headline: 'To maintain medical history and use them with your Appointments',
   description:

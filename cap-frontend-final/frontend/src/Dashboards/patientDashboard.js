@@ -622,6 +622,11 @@ const PatientDashboard = ({ props, history }) => {
           <div className='form'>
             <div className='inputfield'>
               <p>
+                UID : <b>{UID}</b>
+              </p>
+            </div>
+            <div className='inputfield'>
+              <p>
                 Age : <b>{e_age}</b>
               </p>
             </div>
@@ -666,7 +671,7 @@ const PatientDashboard = ({ props, history }) => {
                     Edit your details
                   </button>{' '}
                 </div>
-                <div className='inputfield'>
+                {/*<div className='inputfield'>
                   <button
                     className='btn'
                     onClick={() => {
@@ -683,7 +688,7 @@ const PatientDashboard = ({ props, history }) => {
                     }}>
                     Graph
                   </button>
-                </div>
+                </div>*/}
               </div>
             )}
           </div>

@@ -1,8 +1,9 @@
 .tracker {
+  background: #eee;
   text-align: center;
 }
 .card {
-  background-color: #fff;
+  background-color: #fff !important;
   padding: 20px;
   margin: 5px;
   box-sizing: border-box;

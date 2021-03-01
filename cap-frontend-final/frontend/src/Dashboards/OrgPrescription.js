@@ -6,6 +6,7 @@ import { Button } from '../Landing Page/Button'
 import '../Landing Page/Navbar.css'
 import { Link } from 'react-router-dom'
 import { getPres } from '../CallingApi/patientapi'
+import './styles.css'
 
 function OrgPrescription({ history }) {
   // console.log(history.location.state.userinfo?.UID)
@@ -148,49 +149,59 @@ function OrgPrescription({ history }) {
         }}>
         Organisation all details Dashboard
       </button>*/}
-      <ol>
-        {presData.map((data, i) => {
-          const val = data.medDetails.map((innerData, i) => {
-            return (
-              <li>
-                <div className='wrap'>
-                  <div className='task'>
-                    <div className='abstract'>
-                      <h3>
-                        No of Medication Prescribed: {data.medDetails.length}
-                      </h3>{' '}
-                      <p>
-                        <strong>Medicine Name : </strong>
-                        {innerData.med_name} <br />
-                        <strong> Duration : </strong>
-                        {innerData.duration}
-                      </p>
-                      <p>
-                        <strong>Dosage : </strong>
-                        {innerData.Morning_dosage} {innerData.Evening_dosage}
-                      </p>
-                    </div>
-                    {i === 0 ? (
-                      <div className='details'>
-                        <div className='details__inner'>
-                          <h3>Prescribed by : Dr. {data.Doctor} </h3>
-                          <p>
-                            Data {`&`} Time : {data.createdAt}
-                          </p>
+      <div>
+        {presData ? (
+          <div className='prescription_data'>
+            <ol>
+              {presData.map((data, i) => {
+                const val = data.medDetails.map((innerData, i) => {
+                  return (
+                    <li>
+                      <div className='wrap'>
+                        <div className='task'>
+                          <div className='abstract'>
+                            <h3>
+                              No of Medication Prescribed:{' '}
+                              {data.medDetails.length}
+                            </h3>{' '}
+                            <p>
+                              <strong>Medicine Name : </strong>
+                              {innerData.med_name} <br />
+                              <strong> Duration : </strong>
+                              {innerData.duration}
+                            </p>
+                            <p>
+                              <strong>Dosage : </strong>
+                              {innerData.Morning_dosage}{' '}
+                              {innerData.Evening_dosage}
+                            </p>
+                          </div>
+                          {i === 0 ? (
+                            <div className='details'>
+                              <div className='details__inner'>
+                                <h3>Prescribed by : Dr. {data.Doctor} </h3>
+                                <p>
+                                  Data {`&`} Time : {data.createdAt}
+                                </p>
+                              </div>
+                            </div>
+                          ) : (
+                            ''
+                          )}
+                          {console.log(i, innerData.med_name)}
                         </div>
                       </div>
-                    ) : (
-                      ''
-                    )}
-                    {console.log(i, innerData.med_name)}
-                  </div>
-                </div>
-              </li>
-            )
-          })
-          return val
-        })}
-      </ol>
+                    </li>
+                  )
+                })
+                return val
+              })}
+            </ol>
+          </div>
+        ) : (
+          <h1>Loading....</h1>
+        )}
+      </div>
     </div>
   )
 }

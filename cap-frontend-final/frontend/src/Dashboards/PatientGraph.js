@@ -6,8 +6,23 @@ import { Button } from '../Landing Page/Button'
 import '../Landing Page/Navbar.css'
 import { addGraphValues, getPatGraph, signout } from '../CallingApi/patientapi'
 import Chart from './chart'
+import { makeStyles } from '@material-ui/core/styles'
+import Paper from '@material-ui/core/Paper'
+import Grid from '@material-ui/core/Grid'
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: '#f6f5f5',
+  },
+}))
 
 function PatientGraph({ history }) {
+  const classes = useStyles()
   console.log(history)
   const UID = history.location.state
   console.log(UID)
@@ -162,50 +177,51 @@ function PatientGraph({ history }) {
         </nav>
       </IconContext.Provider>
 
-      {/*<div>
-        <h1>This is Patient Graph Dashboard</h1>
-        <Link to='/patient/dashboard'>
-          {''}
-          <button>Patient Dashboard</button>
-          {''}
-        </Link>
-        { {JSON.stringify(graphValues)} }
-      </div>*/}
-
-      <div className='chart_box'>
-        <div>
-          <Chart
-            className='chart'
-            labels={dateArr}
-            name={'Heart Rate'}
-            dataVal={heart_rate}
-          />
-        </div>
-        <div>
-          <Chart
-            className='chart'
-            labels={dateArr}
-            name={'Blood Pressure'}
-            dataVal={blood_pressure}
-          />
-        </div>
-        <br />
-        <div>
-          <Chart
-            className='chart'
-            labels={dateArr}
-            name={'Cholesterol'}
-            dataVal={cholesterol}
-          />
-        </div>
-        <div>
-          <Chart
-            className='chart'
-            labels={dateArr}
-            name={'Blood Bugar'}
-            dataVal={blood_sugar}
-          />
-        </div>
+      <div className={classes.root}>
+        <Grid container>
+          <Grid item xs={12} sm={6}>
+            <Paper className={classes.paper}>
+              <div>
+                <Chart
+                  className='chart'
+                  labels={dateArr}
+                  name={'Heart Rate'}
+                  dataVal={heart_rate}
+                />
+              </div>
+              <div>
+                <Chart
+                  className='chart'
+                  labels={dateArr}
+                  name={'Blood Pressure'}
+                  dataVal={blood_pressure}
+                />
+              </div>
+            </Paper>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Paper className={classes.paper}>
+              <div>
+                <div>
+                  <Chart
+                    className='chart'
+                    labels={dateArr}
+                    name={'Cholesterol'}
+                    dataVal={cholesterol}
+                  />
+                </div>
+                <div>
+                  <Chart
+                    className='chart'
+                    labels={dateArr}
+                    name={'Blood Bugar'}
+                    dataVal={blood_sugar}
+                  />
+                </div>
+              </div>
+            </Paper>
+          </Grid>
+        </Grid>
       </div>
     </div>
   )

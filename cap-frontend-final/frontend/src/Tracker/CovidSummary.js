@@ -7,7 +7,7 @@ function CovidSummary(props) {
   return (
     <div>
       <div>
-        <h1 style={{ textTransform: 'capitalize' }}>
+        <h1 style={{ textTransform: 'capitalize', color: 'black' }}>
           {country === '' ? 'Global Corona Report' : country}
         </h1>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
